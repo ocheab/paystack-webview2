@@ -10,18 +10,21 @@
   <script>
     function payWithPaystack() {
       var email = new URLSearchParams(window.location.search).get("email") || "test@example.com";
+
       var handler = PaystackPop.setup({
         key: 'pk_live_3480deb66fa010b5638fa9a0dbf328de344738fd',
         email: email,
         amount: 10000, // in kobo (₦100)
         currency: "NGN",
         callback: function(response) {
-          window.location.href = "https://ocheab.github.io/paystack-webview2/success.html?reference=" + response.reference;
+          // Redirect to a recognizable callback page
+          window.location.href = "https://ocheab.github.io/paystack-webview2/callback.html?reference=" + response.reference;
         },
         onClose: function() {
           alert('Payment window closed. You can try again.');
         }
       });
+
       handler.openIframe();
     }
   </script>
