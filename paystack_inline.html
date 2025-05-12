@@ -1,33 +1,26 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Pay with Paystack</title>
-    <meta charset="UTF-8" />
-    <script src="https://js.paystack.co/v1/inline.js"></script>
+    <title>Paystack Inline Payment</title>
+    <meta charset="utf-8" />
   </head>
   <body>
-    <h3>Processing payment...</h3>
-    <script type="text/javascript">
-      // Parse the email from the query string
-      const queryString = window.location.search;
-      const urlParams = new URLSearchParams(queryString);
-      const email = urlParams.get('email') || "test@example.com";
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+    <script>
+      const urlParams = new URLSearchParams(window.location.search);
+      const email = urlParams.get('email') || 'test@example.com';
 
       const handler = PaystackPop.setup({
-        key: 'pk_live_3480deb66fa010b5638fa9a0dbf328de344738fd', // ✅ Replace with your PUBLIC key
+        key: 'pk_live_3480deb66fa010b5638fa9a0dbf328de344738fd',
         email: email,
-        amount: 100 * 100, // Amount in Kobo (e.g. 1000 NGN)
+        amount: 10000, // in kobo
         currency: 'NGN',
-        ref: 'CBT_' + Math.floor(Math.random() * 1000000000 + 1),
-
-        callback: function(response) {
-          // Send success response back to Flutter app (or server)
-          alert("Payment successful. Reference: " + response.reference);
-          window.location.href = "https://your-callback-url.com/success?reference=" + response.reference;
+        callback: function (response) {
+          // Redirect to include the reference for Flutter WebView to detect
+          window.location.href = 'https://ocheab.github.io/paystack-webview2/?reference=' + response.reference;
         },
-
-        onClose: function() {
-          alert('Transaction cancelled.');
+        onClose: function () {
+          alert('Transaction was not completed, window closed.');
         }
       });
 
@@ -35,4 +28,3 @@
     </script>
   </body>
 </html>
-
