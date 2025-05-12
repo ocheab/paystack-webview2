@@ -1,30 +1,30 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Paystack Inline Payment</title>
-    <meta charset="utf-8" />
-  </head>
-  <body>
-    <script src="https://js.paystack.co/v1/inline.js"></script>
-    <script>
-      const urlParams = new URLSearchParams(window.location.search);
-      const email = urlParams.get('email') || 'test@example.com';
+<head>
+  <title>Paystack Inline Payment</title>
+  <meta charset="utf-8" />
+</head>
+<body>
+  <script src="https://js.paystack.co/v1/inline.js"></script>
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const email = urlParams.get('email') || 'test@example.com';
 
-      const handler = PaystackPop.setup({
-        key: 'pk_live_3480deb66fa010b5638fa9a0dbf328de344738fd',
-        email: email,
-        amount: 10000, // Amount in kobo (100 NGN)
-        currency: 'NGN',
-        callback: function (response) {
-          // ✅ Notify Flutter WebView by redirecting with ?reference=...
-          window.location.href = 'https://ocheab.github.io/paystack-webview2/?reference=' + response.reference;
-        },
-        onClose: function () {
-          alert('Payment was not completed.');
-        }
-      });
+    const handler = PaystackPop.setup({
+      key: 'pk_live_3480deb66fa010b5638fa9a0dbf328de344738fd',  // ✅ Your actual public key
+      email: email,
+      amount: 10000, // in kobo (i.e. ₦100)
+      currency: 'NGN',
+      callback: function(response) {
+        // ✅ Redirect with ?reference= to let the Flutter app catch and verify
+        window.location.href = "https://ocheab.github.io/paystack-webview2/success.html?reference=" + response.reference;
+      },
+      onClose: function() {
+        alert('Transaction was cancelled.');
+      }
+    });
 
-      handler.openIframe();
-    </script>
-  </body>
+    handler.openIframe();
+  </script>
+</body>
 </html>
