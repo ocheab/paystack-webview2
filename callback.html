@@ -4,7 +4,15 @@
   <title>Verifying Payment</title>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="refresh" content="2;url=https://ocheab.github.io/paystack-webview2/success.html" />
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const reference = params.get("reference");
+
+    // Auto redirect after 2 seconds, keeping the reference
+    setTimeout(() => {
+      window.location.href = "https://ocheab.github.io/paystack-webview2/success.html?reference=" + reference;
+    }, 2000);
+  </script>
   <style>
     body {
       display: flex;
