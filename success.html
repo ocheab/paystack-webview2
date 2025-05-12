@@ -2,9 +2,19 @@
 <html>
 <head>
   <title>Payment Success</title>
-  <meta http-equiv="refresh" content="2;url=https://ocheab.github.io/paystack-webview2/">
+  <script>
+    // Get the reference from the URL fragment or query (Paystack usually appends it)
+    const urlParams = new URLSearchParams(window.location.search);
+    const reference = urlParams.get("reference");
+
+    // Redirect with reference so Flutter app can detect it
+    if (reference) {
+      window.location.href = `https://ocheab.github.io/paystack-webview2/callback.html?reference=${reference}`;
+    } else {
+      document.write("<h2 style='text-align:center;margin-top:30px;'>✅ Payment Successful! But no reference found.</h2>");
+    }
+  </script>
 </head>
 <body>
-  <h2 style="text-align:center;margin-top:30px;">✅ Payment Successful! Verifying...</h2>
 </body>
 </html>
