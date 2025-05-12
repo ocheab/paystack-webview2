@@ -1,30 +1,29 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Paystack Inline Payment</title>
-  <meta charset="utf-8" />
-</head>
-<body>
+  <meta charset="UTF-8">
+  <title>UniIlorin CBT Payment</title>
   <script src="https://js.paystack.co/v1/inline.js"></script>
+</head>
+<body onload="payWithPaystack()">
+  <h2>Redirecting to Paystack...</h2>
   <script>
-    const urlParams = new URLSearchParams(window.location.search);
-    const email = urlParams.get('email') || 'test@example.com';
-
-    const handler = PaystackPop.setup({
-      key: 'pk_live_3480deb66fa010b5638fa9a0dbf328de344738fd',
-      email: email,
-      amount: 10000,
-      currency: 'NGN',
-      callback: function(response) {
-        // 👇 This is the critical part your Flutter app is watching for
-        window.location.href = "https://ocheab.github.io/paystack-webview2/success.html?reference=" + response.reference;
-      },
-      onClose: function() {
-        alert('Transaction was cancelled.');
-      }
-    });
-
-    handler.openIframe();
+    function payWithPaystack() {
+      var email = new URLSearchParams(window.location.search).get("email") || "test@example.com";
+      var handler = PaystackPop.setup({
+        key: 'pk_live_3480deb66fa010b5638fa9a0dbf328de344738fd',
+        email: email,
+        amount: 10000, // in kobo (₦100)
+        currency: "NGN",
+        callback: function(response) {
+          window.location.href = "https://ocheab.github.io/paystack-webview2/success.html?reference=" + response.reference;
+        },
+        onClose: function() {
+          alert('Payment window closed. You can try again.');
+        }
+      });
+      handler.openIframe();
+    }
   </script>
 </body>
 </html>
