@@ -11,12 +11,12 @@
     const email = urlParams.get('email') || 'test@example.com';
 
     const handler = PaystackPop.setup({
-      key: 'pk_live_3480deb66fa010b5638fa9a0dbf328de344738fd',  // ✅ Your actual public key
+      key: 'pk_live_3480deb66fa010b5638fa9a0dbf328de344738fd',
       email: email,
-      amount: 10000, // in kobo (i.e. ₦100)
+      amount: 10000,
       currency: 'NGN',
       callback: function(response) {
-        // ✅ Redirect with ?reference= to let the Flutter app catch and verify
+        // 👇 This is the critical part your Flutter app is watching for
         window.location.href = "https://ocheab.github.io/paystack-webview2/success.html?reference=" + response.reference;
       },
       onClose: function() {
