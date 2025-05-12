@@ -13,14 +13,14 @@
       const handler = PaystackPop.setup({
         key: 'pk_live_3480deb66fa010b5638fa9a0dbf328de344738fd',
         email: email,
-        amount: 10000, // amount in kobo
+        amount: 10000, // Amount in kobo (100 NGN)
         currency: 'NGN',
         callback: function (response) {
-          // Redirect back with reference so Flutter can detect success
+          // ✅ Notify Flutter WebView by redirecting with ?reference=...
           window.location.href = 'https://ocheab.github.io/paystack-webview2/?reference=' + response.reference;
         },
         onClose: function () {
-          alert('Transaction was not completed, window closed.');
+          alert('Payment was not completed.');
         }
       });
 
